@@ -93,7 +93,7 @@ body {
     flex: 0 0 auto;
     flex-flow: column nowrap;
     gap: 10px;
-    height: 150px;
+    height: 35px;
     overflow: hidden;
     padding: 20px;
     position: relative;
@@ -127,7 +127,7 @@ textarea {
     display: flex;
     place-content: center;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: center;
     flex: 0 0 auto;
     flex-flow: row nowrap;
     gap: 12px;
