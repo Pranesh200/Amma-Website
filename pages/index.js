@@ -2,7 +2,10 @@ import Head from 'next/head';
 import Image from 'next/image';
 import buildspaceLogo from '../assets/buildspace-logo.png';
 import { useState } from 'react';
-
+import CodeBlock from './CodeBlock'
+import Prism from 'prismjs';
+import 'prismjs/components/prism-javascript';
+import 'prismjs/themes/prism.css';
 
 const Home = () => {
   const [userContext, setuserContext] = useState('');
@@ -53,7 +56,7 @@ const Home = () => {
             <h1>StackGPT</h1>
           </div>
           <div className="header-subtitle">
-            <h2>Context + Code + Question = Solution</h2>
+            <h2>Instant answers to all your coding questions</h2>
           </div>
           <div className="header-subtitle">
           <h2>(Context and code are optional)</h2>
@@ -69,7 +72,7 @@ const Home = () => {
           />
 
           <textarea
-            className="prompt-box"
+            className="prompt-box monospace"
             placeholder="throw the code that needs fixing in here"
             value={userCode}
             onChange={onCodeChangedText}
@@ -100,10 +103,14 @@ const Home = () => {
       </div>
     </div>
     <div className="output-content">
-      <p>{apiOutput}</p>
-    </div>
+      <div className='code-block'>
+        <CodeBlock code={apiOutput} />
+      </div>   
+   </div>
   </div>
 )}
+
+
         </div>
 
         

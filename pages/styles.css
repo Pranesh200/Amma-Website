@@ -114,15 +114,28 @@ body {
 }
 
 textarea {
-    font-family: 'Manrope', sans-serif;
+    font-family: monospace;
 }
 
+.rounded {
+    border-radius: 5px;
+}
 
 .prompt-box:focus {
     border-color:rgba(255, 255, 255, 0.75)
 }
 
 
+textarea.monospace {
+    /* background-color: #f6f8fa; */
+}
+
+
+.code-block {
+    color: #FFF;
+    font-weight: 600;
+    font-size: 22px;
+}
 .prompt-buttons {
     display: flex;
     place-content: center;
