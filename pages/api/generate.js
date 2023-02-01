@@ -21,7 +21,7 @@ const generateAction = async (req, res) => {
   Given this problem: 
   ${req.body.userQuestion}
 
-  Give me a solution to fix my problem given the code and context:
+  If I have code and context, Give me a solution to fix my problem. Else, just answer my question:
   `;
 
   // Run first prompt
@@ -31,7 +31,7 @@ const generateAction = async (req, res) => {
     model: 'text-davinci-003',
     prompt: `${firstPrompt}`,
     temperature: 0.7,
-    max_tokens: 250,
+    max_tokens: 1024,
   });
 
   const basePromptOutput = baseCompletion.data.choices.pop();
