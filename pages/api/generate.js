@@ -36,6 +36,12 @@ const generateAction = async (req, res) => {
 
   const basePromptOutput = baseCompletion.data.choices.pop();
 
+  const isCode = text => {
+    const codeRegex = /;\n|{.*}/;
+    return codeRegex.test(text);
+  };
+
+let codeCheck = isCode(basePromptOutput.text)
 //   const secondPrompt =   `
 //   Suggest me some gifts priced under $50 for a person who loves ${req.body.userContext}
 
@@ -56,7 +62,7 @@ const generateAction = async (req, res) => {
 //   const finalPromptOutput = finalCompletion.data.choices.pop();
 
 
-  res.status(200).json({ output: basePromptOutput });
+  res.status(200).json({ output: basePromptOutput, isCode:  codeCheck});
 };
 
 

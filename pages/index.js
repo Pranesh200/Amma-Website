@@ -13,6 +13,7 @@ const Home = () => {
   const [userQuestion, setuserQuestion] = useState('');
 
   const [apiOutput, setApiOutput] = useState('')
+  const [isCode, setIsCode] = useState(false)
   const [isGenerating, setIsGenerating] = useState(false)
 
   const callGenerateEndpoint = async () => {
@@ -29,10 +30,12 @@ const Home = () => {
 
     const data = await response.json();
     console.log("Hi", data)
-    const { output } = data;
+    const { output, isCode } = data;
     console.log("OpenAI replied...", output.text)
 
     setApiOutput(`${output.text}`);
+    setIsCode(isCode);
+
     setIsGenerating(false);
   }
   const onContextChangedText = (event) => {
@@ -103,9 +106,11 @@ const Home = () => {
       </div>
     </div>
     <div className="output-content">
-      <div className='code-block'>
-        <CodeBlock code={apiOutput} />
-      </div>   
+        {isCode ? 
+        <div className='code-block'>
+          <CodeBlock code={apiOutput} />  
+        </div> : <p className='text-output'>{apiOutput}</p>
+        } 
    </div>
   </div>
 )}

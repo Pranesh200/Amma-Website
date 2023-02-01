@@ -135,6 +135,7 @@ textarea.monospace {
     color: #FFF;
     font-weight: 600;
     font-size: 22px;
+    white-space: pre-wrap;
 }
 .prompt-buttons {
     display: flex;
@@ -336,7 +337,7 @@ textarea.monospace {
 .output-content p {
     text-align: center;
     white-space: pre-line;
-    color: rgba(255, 255, 255, 0.5);
+    color: #ffffff;
 }
 
 @media (min-width: 810px) and (max-width: 1199px) {

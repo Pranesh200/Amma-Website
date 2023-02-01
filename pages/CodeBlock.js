@@ -1,24 +1,18 @@
 import Prism from 'prismjs';
 import 'prismjs/components/prism-javascript';
 import 'prismjs/themes/prism.css';
-import React, { useEffect, useRef  } from 'react';
+import React, { useEffect } from 'react';
 
 const CodeBlock = ({ code }) => {
-    const codeRef = useRef(null);
-    useEffect(() => {
-      Prism.highlightAll();
-    }, [code]);
-    const copyToClipboard = () => {
-      codeRef.current.select();
-      document.execCommand("copy");
-    }
-    return (
-      <>
-      <pre className="rounded" >
-        <code ref={codeRef} className="language-javascript">{code}</code>
-      </pre>
-      </>
-    );
-  };
-  
-  export default CodeBlock
+  useEffect(() => {
+    Prism.highlightAll();
+  }, [code]);
+
+  return (
+    <pre className="rounded">
+      <code className="language-javascript">{code}</code>
+    </pre>
+  );
+};
+
+export default CodeBlock;
