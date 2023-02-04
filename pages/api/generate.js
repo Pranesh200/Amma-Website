@@ -4,6 +4,7 @@ const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
+console.log("CONFIG", configuration.apiKey)
 const openai = new OpenAIApi(configuration);
 
 
@@ -11,7 +12,7 @@ const openai = new OpenAIApi(configuration);
 const generateAction = async (req, res) => {
 
   const firstPrompt =
-  `
+    `
   Given this context: 
   ${req.body.userContext}
 
@@ -41,28 +42,28 @@ const generateAction = async (req, res) => {
     return codeRegex.test(text);
   };
 
-let codeCheck = isCode(basePromptOutput.text)
-//   const secondPrompt =   `
-//   Suggest me some gifts priced under $50 for a person who loves ${req.body.userContext}
+  let codeCheck = isCode(basePromptOutput.text)
+  //   const secondPrompt =   `
+  //   Suggest me some gifts priced under $50 for a person who loves ${req.body.userContext}
 
-//   List: ${basePromptOutput.text}
-  
-//   List
-//   `;
-  
-//   console.log(`API: ${secondPrompt}`)
+  //   List: ${basePromptOutput.text}
 
-//   const finalCompletion = await openai.createCompletion({
-//     model: 'text-davinci-002',
-//     prompt: `${secondPrompt}`,
-//     temperature: 0.7,
-//     max_tokens: 1250,
-//   });
+  //   List
+  //   `;
 
-//   const finalPromptOutput = finalCompletion.data.choices.pop();
+  //   console.log(`API: ${secondPrompt}`)
+
+  //   const finalCompletion = await openai.createCompletion({
+  //     model: 'text-davinci-002',
+  //     prompt: `${secondPrompt}`,
+  //     temperature: 0.7,
+  //     max_tokens: 1250,
+  //   });
+
+  //   const finalPromptOutput = finalCompletion.data.choices.pop();
 
 
-  res.status(200).json({ output: basePromptOutput, isCode:  codeCheck});
+  res.status(200).json({ output: basePromptOutput, isCode: codeCheck });
 };
 
 

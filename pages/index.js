@@ -1,126 +1,108 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import buildspaceLogo from '../assets/buildspace-logo.png';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useState } from 'react';
-import CodeBlock from './CodeBlock'
-import Prism from 'prismjs';
-import 'prismjs/components/prism-javascript';
-import 'prismjs/themes/prism.css';
+
 
 const Home = () => {
-  const [userContext, setuserContext] = useState('');
-  const [userCode, setuserCode] = useState('');
-  const [userQuestion, setuserQuestion] = useState('');
-
-  const [apiOutput, setApiOutput] = useState('')
-  const [isCode, setIsCode] = useState(false)
-  const [isGenerating, setIsGenerating] = useState(false)
+  const [apiOutput, setApiOutput] = useState('');
+  const [isGenerating, setIsGenerating] = useState(false);
 
   const callGenerateEndpoint = async () => {
-    setIsGenerating(true);
+
+    let regexCodeCheck = /\b(int|str|char)\b\s*=|\b(for|if|while)\b\s*[\{\(]|\/\/.*|\/\*[\s\S]*?\*\/|\"\"\".*|\b(func)\b\s*[\(\w]+|\bprint\b\(|\b\w+\b\.\b\w+\b|\bimport\b\s+\b\w+\b|\bclass\b\s+\b\w+\b|\b\w+\b\s*=\s*\b\w+\b|\breturn\b\s+.*|\byield\b\s+.*|<\s*\w+.*>.*<\s*\/\s*\w+.*>|\bvar\b\s+\b\w+\b|\bpackage\b\s+\b\w+\b/;
+
+    let userContext = document.getElementById("context").innerHTML
+    let userCode = document.getElementById("code").innerHTML
+    let userQuestion = document.getElementById("question").innerHTML
+    console.log(`Code: ${regexCodeCheck.test(userCode)}`)
+
+    if (regexCodeCheck.test(userCode) || (userCode.length == 0)) {
+      setIsGenerating(true);
     
-    console.log("Calling OpenAI...")
-    const response = await fetch('/api/generate', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ userContext, userCode, userQuestion }),
-    });
-
-    const data = await response.json();
-    console.log("Hi", data)
-    const { output, isCode } = data;
-    console.log("OpenAI replied...", output.text)
-
-    setApiOutput(`${output.text}`);
-    setIsCode(isCode);
-
-    setIsGenerating(false);
+      console.log("Calling OpenAI...")
+      const response = await fetch('/api/generate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userContext, userCode, userQuestion }),
+      });
+  
+      const data = await response.json();
+      console.log("Hi", data)
+      const { output } = data;
+      console.log("OpenAI replied...", output.text)
+  
+      setApiOutput(`${output.text}`);
+      setIsGenerating(false);
+    } else {
+      toast("alert")
+    }
+    
   }
-  const onContextChangedText = (event) => {
-    console.log(event.target.value);
-    setuserContext(event.target.value);
-  };
-  const onCodeChangedText = (event) => {
-    console.log(event.target.value);
-    setuserCode(event.target.value);
-  };
-  const onQuestionChangedText = (event) => {
-    console.log(event.target.value);
-    setuserQuestion(event.target.value);
-  };
 
   return (
     <div className="root">
       <div className="container">
         <div className="header">
-          <div className="header-title">
-            <h1>StackGPT</h1>
-          </div>
-          <div className="header-subtitle">
-            <h2>Instant answers to all your coding questions</h2>
-          </div>
-          <div className="header-subtitle">
-          <h2>(Context and code are optional)</h2>
-          </div>
-
+          <div className="header-title"><h1>StackGPT</h1></div>
+          <div className="header-subtitle"><h2>Context + Code + Question = Solution</h2></div>
+          <div className="header-subtitle"><h2>(Context and code are optional)</h2></div>
         </div>
         <div className="prompt-container">
-          <textarea
+          <div
+            id="context"
             className="prompt-box"
             placeholder="provide some context to the code (a little context can go a long way!)"
-            value={userContext}
-            onChange={onContextChangedText}
+            contentEditable
+            // value={userContext}
+            // onChange={onContextChangedText}
           />
 
-          <textarea
-            className="prompt-box monospace"
+          <div
+            id="code"
+            className="prompt-box"
             placeholder="throw the code that needs fixing in here"
-            value={userCode}
-            onChange={onCodeChangedText}
+            contentEditable
+            // value={userCode}
+            // onChange={onCodeChangedText}
           />
 
-          <textarea
+          <div
+            id="question"
             className="prompt-box"
             placeholder="Enter your question here"
-            value={userQuestion}
-            onChange={onQuestionChangedText}
+            contentEditable
+            // value={userQuestion}
+            // onChange={onQuestionChangedText}
           />
           <div className="prompt-buttons">
-  <a
-    className={isGenerating ? 'generate-button loading' : 'generate-button'}
-    onClick={callGenerateEndpoint}
-  >
-    <div className="generate">
-    {isGenerating ? <span class="loader"></span> : <p> Generate solution </p>}
-    </div>
-  </a>
-</div>
+            <a
+              className={isGenerating ? 'generate-button loading' : 'generate-button'}
+              onClick={callGenerateEndpoint}
+            >
+              <div className="generate">
+              {isGenerating ? <span class="loader"></span> : <p> Generate solution </p>}
+              </div>
+            </a>
+          </div>
 
           {apiOutput && (
-  <div className="output">
-    <div className="output-header-container">
-      <div className="output-header">
-        <h3>Output</h3>
-      </div>
-    </div>
-    <div className="output-content">
-        {isCode ? 
-        <div className='code-block'>
-          <CodeBlock code={apiOutput} />  
-        </div> : <p className='text-output'>{apiOutput}</p>
-        } 
-   </div>
-  </div>
-)}
-
-
+            <div className="output">
+              <div className="output-header-container">
+                <div className="output-header"><h3>Output</h3></div>
+              </div>
+              <div className="output-content"><p>{apiOutput}</p></div>
+            </div>
+          )}
         </div>
 
         
       </div>
-     
+      <ToastContainer theme="dark" fontSize="8px"/>
     </div>
   );
 };
