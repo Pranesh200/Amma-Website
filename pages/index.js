@@ -16,7 +16,7 @@ const Home = () => {
 
     let userContext = document.getElementById("context").value
     let userCode = document.getElementById("code").value
-    let userQuestion = document.getElementById("question").valye
+    let userQuestion = document.getElementById("question").value
     console.log(`Code: ${regexCodeCheck.test(userCode)}`)
 
     if (regexCodeCheck.test(userCode) || (userCode.length == 0)) {
