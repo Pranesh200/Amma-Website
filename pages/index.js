@@ -14,9 +14,9 @@ const Home = () => {
 
     let regexCodeCheck = /\b(int|str|char)\b\s*=|\b(for|if|while)\b\s*[\{\(]|\/\/.*|\/\*[\s\S]*?\*\/|\"\"\".*|\b(func)\b\s*[\(\w]+|\bprint\b\(|\b\w+\b\.\b\w+\b|\bimport\b\s+\b\w+\b|\bclass\b\s+\b\w+\b|\b\w+\b\s*=\s*\b\w+\b|\breturn\b\s+.*|\byield\b\s+.*|<\s*\w+.*>.*<\s*\/\s*\w+.*>|\bvar\b\s+\b\w+\b|\bpackage\b\s+\b\w+\b/;
 
-    let userContext = document.getElementById("context").innerHTML
-    let userCode = document.getElementById("code").innerHTML
-    let userQuestion = document.getElementById("question").innerHTML
+    let userContext = document.getElementById("context").value
+    let userCode = document.getElementById("code").value
+    let userQuestion = document.getElementById("question").valye
     console.log(`Code: ${regexCodeCheck.test(userCode)}`)
 
     if (regexCodeCheck.test(userCode) || (userCode.length == 0)) {
@@ -53,29 +53,26 @@ const Home = () => {
           <div className="header-subtitle"><h2>(Context and code are optional)</h2></div>
         </div>
         <div className="prompt-container">
-          <div
+          <textarea
             id="context"
             className="prompt-box"
             placeholder="provide some context to the code (a little context can go a long way!)"
-            contentEditable
             // value={userContext}
             // onChange={onContextChangedText}
           />
 
-          <div
+          <textarea
             id="code"
             className="prompt-box"
             placeholder="throw the code that needs fixing in here"
-            contentEditable
             // value={userCode}
             // onChange={onCodeChangedText}
           />
 
-          <div
+          <textarea
             id="question"
             className="prompt-box"
             placeholder="Enter your question here"
-            contentEditable
             // value={userQuestion}
             // onChange={onQuestionChangedText}
           />
