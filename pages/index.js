@@ -57,24 +57,18 @@ const Home = () => {
             id="context"
             className="prompt-box"
             placeholder="provide some context to the code (a little context can go a long way!)"
-            // value={userContext}
-            // onChange={onContextChangedText}
           />
 
           <textarea
             id="code"
             className="prompt-box"
             placeholder="throw the code that needs fixing in here"
-            // value={userCode}
-            // onChange={onCodeChangedText}
           />
 
           <textarea
             id="question"
             className="prompt-box"
             placeholder="Enter your question here"
-            // value={userQuestion}
-            // onChange={onQuestionChangedText}
           />
           <div className="prompt-buttons">
             <a
