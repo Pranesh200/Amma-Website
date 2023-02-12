@@ -56,7 +56,7 @@ const Home = () => {
       <div className="container">
         <div className="header">
           <div className="header-title">
-            <h1>StackGPT</h1>
+            <h1>Codazio</h1>
           </div>
           <div className="header-subtitle">
             <h2>Instant answers to all your coding questions</h2>
@@ -69,14 +69,14 @@ const Home = () => {
         <div className="prompt-container">
           <textarea
             className="prompt-box"
-            placeholder="provide some context to the code (a little context can go a long way!)"
+            placeholder="provide some context (a little context can go a long way!)"
             value={userContext}
             onChange={onContextChangedText}
           />
 
           <textarea
             className="prompt-box monospace"
-            placeholder="throw the code that needs fixing in here"
+            placeholder="throw the code that needs looking at here"
             value={userCode}
             onChange={onCodeChangedText}
           />
@@ -106,11 +106,7 @@ const Home = () => {
       </div>
     </div>
     <div className="output-content">
-        {isCode ? 
-        <div className='code-block'>
-          <CodeBlock code={apiOutput} />  
-        </div> : <p className='text-output'>{apiOutput}</p>
-        } 
+       <p className='text-output'>{apiOutput}</p>
    </div>
   </div>
 )}
