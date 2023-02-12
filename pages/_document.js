@@ -4,6 +4,7 @@ export default function Document() {
   return (
     <Html>
       <Head>
+      <title>Codazio - Instant solutions to all your coding problems!</title>
         <meta property="og:title" content="GPT-3 Writer" key="title"/>
         <meta property="og:description" content="build with buildspace" key="description"/>
         <meta
