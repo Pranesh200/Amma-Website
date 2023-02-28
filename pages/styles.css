@@ -35,7 +35,7 @@ body {
     gap: 64px;
 }
 
-.header {    
+.header {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -114,14 +114,29 @@ body {
 }
 
 textarea {
-    font-family: 'Manrope', sans-serif;
+    font-family: monospace;
 }
 
+.rounded {
+    border-radius: 5px;
+}
 
 .prompt-box:focus {
-    border-color:rgba(255, 255, 255, 0.75)
+    border-color: rgba(255, 255, 255, 0.75)
 }
 
+
+textarea.monospace {
+    /* background-color: #f6f8fa; */
+}
+
+
+.code-block {
+    color: #FFF;
+    font-weight: 600;
+    font-size: 22px;
+    white-space: pre-wrap;
+}
 
 .prompt-buttons {
     display: flex;
@@ -323,7 +338,7 @@ textarea {
 .output-content p {
     text-align: center;
     white-space: pre-line;
-    color: rgba(255, 255, 255, 0.5);
+    color: #ffffff;
 }
 
 @media (min-width: 810px) and (max-width: 1199px) {
@@ -372,7 +387,8 @@ textarea {
         text-align: center;
     }
 
-    .key-stroke, .or {
+    .key-stroke,
+    .or {
         display: none;
     }
 
@@ -392,7 +408,7 @@ textarea {
 
 
 
- /* Loading ring animation */
+/* Loading ring animation */
 .loader {
     width: 18px;
     height: 18px;
