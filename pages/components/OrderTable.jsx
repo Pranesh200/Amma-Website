@@ -6,7 +6,7 @@ function OrdersTable({ orders }) {
             <Thead>
                 <Tr>
                     <Th color='white'>Order ID</Th>
-                    <Th color='white'npm run dev>Menu ID</Th>
+                    <Th color='white' npm run dev>Menu ID</Th>
                     <Th color='white'>Order Date</Th>
                     <Th color='white'>Order Time</Th>
                     <Th color='white'>Customer Name</Th>
@@ -18,7 +18,7 @@ function OrdersTable({ orders }) {
                 </Tr>
             </Thead>
             <Tbody>
-                {orders.map((order) => (
+                {orders?.map((order) => (
                     <Tr key={order.order_id}>
                         <Td color='white'>{order.order_id}</Td>
                         <Td color='white'>{order.menu_id}</Td>
