@@ -1,9 +1,10 @@
-import { Checkbox, CheckboxGroup, Stack, Button, Box, useToast } from '@chakra-ui/react'
+import { Checkbox, CheckboxGroup, Stack, Button, Box, useToast, Spinner } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 
 function DayItems({ customerName, customerPhone }) {
     const [menu, setMenu] = useState({});
+    const [loading, setLoading] = useState(false);
     const [checkedItems, setCheckedItems] = useState({});
     const allChecked = Object.values(checkedItems).flat()?.length === 21
     const isIndeterminate = Object.values(checkedItems).flat()?.length > 0 && !allChecked
@@ -11,11 +12,13 @@ function DayItems({ customerName, customerPhone }) {
 
     useEffect(() => {
         // Fetch the menu data from the API endpoint
+        setLoading(true)
         const fetchMenu = async () => {
             const res = await fetch("/api/menu");
             const data = await res.json();
             console.log("data", data);
             setMenu(data);
+            setLoading(false)
         };
         fetchMenu();
         const initialCheckedItems = {};
@@ -63,8 +66,7 @@ function DayItems({ customerName, customerPhone }) {
 
 
     return (
-        <>
-            {console.log(menu)}
+        <> {loading && <Spinner color="white"></Spinner>}
             <Box display="flex" flexDirection="column">
                 {Object.entries(menu).map(([day, items]) => (
                     <Box key={day} mb={4}>
