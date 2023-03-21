@@ -37,7 +37,6 @@ export default async function handler(req, res) {
                 orders.push({
                     menu_id: menuData.menu_id,
                     order_date: new Date(),
-                    order_time: new Date().toLocaleTimeString(),
                     customer_name: customerName,
                     customer_phone: customerPhone
                 });
