@@ -4,8 +4,8 @@ export default function Document() {
   return (
     <Html>
       <Head>
-        <meta property="og:title" content="Codazio" key="title" />
-        <meta property="og:description" content="The magic wand to your coding problems" key="description" />
+        <meta property="og:title" content="Suvai" key="title" />
+        <meta property="og:description" content="The ordering website" key="description" />
         <meta name="twitter:card" content="summary_large_image"></meta>
       </Head>
       <body>
