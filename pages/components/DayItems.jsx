@@ -1,4 +1,4 @@
-import { Checkbox, CheckboxGroup, Stack, Button, Box, useToast, Spinner } from '@chakra-ui/react'
+import { Checkbox, CheckboxGroup, Stack, Button, Box, useToast, Spinner, InputGroup, InputLeftElement, Input } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 
@@ -45,10 +45,23 @@ function DayItems({ customerName, customerPhone }) {
     const handleSubmit = async () => {
         try {
             console.log("HEREEEE")
+            const itemsWithQuantity = [];
+            for (const [day, items] of Object.entries(checkedItems)) {
+                for (const item of items) {
+                    const input = document.getElementById(`${day}-${item}-quantity`);
+                    const quantity = input.value;
+                    itemsWithQuantity.push({
+                        day,
+                        item_name: item,
+                        quantity
+                    });
+                };
+            }
+            console.log(itemsWithQuantity)
             const response = await axios.post('/api/checked-items', {
                 customerName,
                 customerPhone,
-                checkedItems
+                itemsWithQuantity
             })
             toast({
                 title: "Submitted!",
@@ -58,9 +71,11 @@ function DayItems({ customerName, customerPhone }) {
             });
             console.log("submit", response)
         } catch (error) {
+            console.log(error)
             console.log(customerName)
             console.log(customerPhone)
-            console.log(checkedItems)
+            // console.log(checkedItems)
+            // console.log(itemsWithQuantity) 
         }
     }
 
@@ -82,9 +97,15 @@ function DayItems({ customerName, customerPhone }) {
                             {items.length > 0 && (
                                 <Stack pl={6} mt={1} spacing={1}>
                                     {items.map(item => (
-                                        <Checkbox key={item} value={item} color="white">
-                                            {item}
-                                        </Checkbox>
+                                        <div className='label-picks' key={`${day}-${item}`}>
+                                            <Checkbox key={item} value={item} color="white">
+                                                {item}
+                                            </Checkbox>
+                                            <InputGroup size="sm" maxW="12" color="white">
+                                                {/* <InputLeftElement pointerEvents="none" children="Qty:" /> */}
+                                                <Input placeholder="Qty:" id={`${day}-${item}-quantity`}/>
+                                            </InputGroup>
+                                        </div>
                                     ))}
                                 </Stack>
                             )}

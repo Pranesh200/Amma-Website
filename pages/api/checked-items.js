@@ -5,22 +5,24 @@ const supabase = createClient(
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJwbmloYW1zemRycWh0cHZhaXprIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzgxNDEzMjcsImV4cCI6MTk5MzcxNzMyN30.HbXoEwm4pYh8W6tStK-0Uz_yIArLRL6I75p1a8eKNhk"
 );
 export default async function handler(req, res) {
-    const { customerName, customerPhone, checkedItems } = req.body;
+    const { customerName, customerPhone, itemsWithQuantity } = req.body;
 
     try {
         const orders = [];
-
         // Loop through each day of the week in the checkedItems object
-        for (const dayOfWeek in checkedItems) {
-            const items = checkedItems[dayOfWeek];
+        for (const item in itemsWithQuantity) {
+            console.log(itemsWithQuantity[item])
+            const items = itemsWithQuantity[item];
+            console.log(items)
 
             // Loop through each item in the current day's items array
             for (const itemName of items) {
+                console.log(itemName)
                 // Query the menu table to get the menu_id for the current item
                 const { data: menuData, error: menuError } = await supabase
                     .from('menu')
                     .select('menu_id')
-                    .eq('item_name', itemName)
+                    .eq('item_name', items["item_name"])
                     .single();
 
                 if (menuError) {
@@ -38,7 +40,8 @@ export default async function handler(req, res) {
                     menu_id: menuData.menu_id,
                     order_date: new Date(),
                     customer_name: customerName,
-                    customer_phone: customerPhone
+                    customer_phone: customerPhone,
+                    quantity: item["quantity"]
                 });
             }
         }
@@ -55,7 +58,7 @@ export default async function handler(req, res) {
 
         return res.status(200).json({ message: 'Orders successfully inserted' });
     } catch (error) {
-        console.error(error);
+        // console.error(error);
         return res.status(500).json({ message: 'Error inserting order' });
     }
 }

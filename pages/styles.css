@@ -201,6 +201,12 @@ textarea {
     cursor: default;
 }
 
+.label-picks {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
 
 @media (min-width: 810px) and (max-width: 1199px) {
     .container {
