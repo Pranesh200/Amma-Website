@@ -8,11 +8,12 @@ import {
   Spinner,
   Flex,
   Input,
+  NumberInput,
+  Heading
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import axios from "axios";
-
-function DayItems({ customerName, customerPhone }) {
+function DayItems({ customerName, customerEmail }) {
   const [menu, setMenu] = useState({});
   const [loading, setLoading] = useState(false);
   const [checkedItems, setCheckedItems] = useState({});
@@ -103,10 +104,19 @@ function DayItems({ customerName, customerPhone }) {
         },
         []
       );
+      const checkedItemsString = JSON.stringify(checkedItems)
 
+      const emailResponse = await axios.post("/api/send-grid", {
+        subject:
+          "Order Confirmation",
+        customerName,
+        customerPhone: customerEmail,
+        checkedItems,
+      });
+      console.log(emailResponse)
       const response = await axios.post("/api/checked-items", {
         customerName,
-        customerPhone,
+        customerPhone: customerEmail,
         checkedItems,
       });
 
@@ -118,8 +128,15 @@ function DayItems({ customerName, customerPhone }) {
       });
       console.log("submit", response);
     } catch (error) {
+      toast({
+        title: "Not Submitted",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      console.log(error);
       console.log(customerName);
-      console.log(customerPhone);
+      console.log(customerEmail);
       console.log(checkedItems);
     }
   };
@@ -128,6 +145,9 @@ function DayItems({ customerName, customerPhone }) {
     <>
       {" "}
       {loading && <Spinner color="white"></Spinner>}
+      <Heading as="h4" fontSize="20px" color='orange'>
+        If the order is successful, you will see a green success message and recieve an emial confirmation (Please contact me if you do not receive an email or confirmation):
+      </Heading>
       <Box display="flex" flexDirection="column">
         {Object.entries(menu).map(([day, items]) => (
           <Box key={day} mb={4}>
@@ -170,12 +190,15 @@ function DayItems({ customerName, customerPhone }) {
                         default={1}
                         min={1}
                         max={10}
+                        pattern="^[0-9]*$"
+                        inputMode="numeric" // Added this line to restrict input to only numbers
                         onChange={(e) =>
                           handleQuantityChange(day, item, e.target.value)
                         }
                       />
                     </Flex>
                   ))}
+                  <NumberInput step={5} defaultValue={15} min={10} max={30} />
                 </Stack>
               )}
             </CheckboxGroup>

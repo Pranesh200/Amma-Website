@@ -52,28 +52,22 @@ export default function Builder() {
                         />
                         {errors.customerName && <AlertPop title={errors.customerName.message} />}
                         <Heading as="h4" fontSize="20px" color='white'>
-                            Your Number:
+                            Your Email:
                         </Heading>
                         <Input
-                            type="tel"
+                            type="email"
                             color='white'
                             _placeholder={{ color: 'lightgray' }}
-                            placeholder="800-123-4567"
-                            onKeyUp={(event) => {
-                                const phoneNumber = event.target.value;
-                                const formattedPhoneNumber = phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
-                                event.target.value = formattedPhoneNumber;
-                            }}
-                            {...register("phoneNumber", {
-                                required: "Please enter a phone number",
+                            placeholder="example@domain.com"
+                            {...register("customerEmail", {
+                                required: "Please enter an email address",
                                 pattern: {
-                                    value: /^\d{3}-\d{3}-\d{4}$/,
-                                    message: "Please enter a valid phone number"
+                                    value: /^\S+@\S+$/i,
+                                    message: "Please enter a valid email address"
                                 }
                             })}
                         />
-
-                        {errors.phoneNumber && <AlertPop title={errors.phoneNumber.message} />}
+                        {errors.customerEmail && <AlertPop title={errors.customerEmail.message} />}
                         <Button
                             borderRadius="md"
                             bg="rgb(255, 79, 18)"
@@ -88,7 +82,7 @@ export default function Builder() {
             </div>
 
             {data && (
-                <DayItems customerName={data.customerName} customerPhone={data.phoneNumber} />
+                <DayItems customerName={data.customerName} customerEmail={data.customerEmail} />
             )}
 
         </Box>
