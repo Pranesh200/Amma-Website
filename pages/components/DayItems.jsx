@@ -146,7 +146,7 @@ function DayItems({ customerName, customerEmail }) {
       {" "}
       {loading && <Spinner color="white"></Spinner>}
       <Heading as="h4" fontSize="20px" color='orange'>
-        If the order is successful, you will see a green success message and recieve an emial confirmation (Please contact me if you do not receive an email or confirmation):
+        If the order is successful, you will see a green success message and recieve an email confirmation (Please contact me if you do not receive an email or confirmation):
       </Heading>
       <Box display="flex" flexDirection="column">
         {Object.entries(menu).map(([day, items]) => (
