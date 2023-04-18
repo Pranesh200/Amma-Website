@@ -15,7 +15,6 @@ function OrdersTable({ orders }) {
           <Th color="white">Menu Item</Th>
           <Th color="white">Menu Day</Th>
           <Th color="white">Menu Start Date</Th>
-          <Th color="white">Menu End Date</Th>
           <Th color="white">Quantity</Th>
         </Tr>
       </Thead>
