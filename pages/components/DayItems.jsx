@@ -9,7 +9,7 @@ import {
   Flex,
   Input,
   NumberInput,
-  Heading
+  Heading,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -54,7 +54,7 @@ function DayItems({ customerName, customerEmail }) {
   };
   const handleQuantityChange = (day, itemName, quantity) => {
     setCheckedItems((prev) => {
-      const foundIndex = prev[day].findIndex(
+      const foundIndex = prev[day]?.findIndex(
         (item) => item.itemName === itemName
       );
       if (foundIndex === -1) {
@@ -104,16 +104,15 @@ function DayItems({ customerName, customerEmail }) {
         },
         []
       );
-      const checkedItemsString = JSON.stringify(checkedItems)
+      const checkedItemsString = JSON.stringify(checkedItems);
 
       const emailResponse = await axios.post("/api/send-grid", {
-        subject:
-          "Order Confirmation",
+        subject: "Order Confirmation",
         customerName,
         customerPhone: customerEmail,
         checkedItems,
       });
-      console.log(emailResponse)
+      console.log(emailResponse);
       const response = await axios.post("/api/checked-items", {
         customerName,
         customerPhone: customerEmail,
@@ -145,8 +144,14 @@ function DayItems({ customerName, customerEmail }) {
     <>
       {" "}
       {loading && <Spinner color="white"></Spinner>}
-      <Heading as="h4" fontSize="20px" color='orange'>
-        If the order is successful, you will see a green success message and recieve an email confirmation (Please contact me if you do not receive an email or confirmation):
+      <Heading as="h4" fontSize="20px" color="white">
+        Please click the checkbox of the item you would like, and enter quantity
+        (numbers only)
+      </Heading>
+      <Heading as="h4" fontSize="20px" color="orange">
+        If the order is successful, you will see a green success message and
+        recieve an email confirmation (Please contact me if you do not receive
+        an email or confirmation):
       </Heading>
       <Box display="flex" flexDirection="column">
         {Object.entries(menu).map(([day, items]) => (
