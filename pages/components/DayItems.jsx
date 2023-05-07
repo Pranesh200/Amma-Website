@@ -41,12 +41,7 @@ function DayItems({ customerName, customerEmail }) {
     setCheckedItems(initialCheckedItems);
   }, []);
 
-  useEffect(() => {
-    console.log("CHECK", checkedItems);
-  }, [checkedItems]);
-
   const handleCheckboxChange = (day, values) => {
-    console.log("HELLLLLo");
     setCheckedItems((prevState) => ({
       ...prevState,
       [day]: values,
@@ -65,7 +60,7 @@ function DayItems({ customerName, customerEmail }) {
         };
       } else {
         // item found, update the properties
-        const updatedItems = [...prev[day]];
+        const updatedItems = prev.hasOwnProperty(day) ? [...prev[day]] : [];
         updatedItems[foundIndex] = {
           ...updatedItems[foundIndex],
           quantity,
@@ -80,10 +75,6 @@ function DayItems({ customerName, customerEmail }) {
   };
 
   const isChecked = (day, item) => {
-    console.log(
-      "HERE",
-      checkedItems[day]?.some((i) => i === item)
-    );
     return checkedItems[day]?.some((i) => i === item);
   };
 
@@ -96,7 +87,7 @@ function DayItems({ customerName, customerEmail }) {
     try {
       const selectedItems = Object.entries(checkedItems).reduce(
         (acc, [day, items]) => {
-          const selected = items.map((item) => ({
+          const selected = items?.map((item) => ({
             name: item,
             quantity: quantityState[day]?.[item] || 1, // Use quantityState if available, otherwise default to 1
           }));
@@ -179,7 +170,7 @@ function DayItems({ customerName, customerEmail }) {
               </Checkbox>
               {items.length > 0 && (
                 <Stack pl={6} mt={1} spacing={1}>
-                  {items.map((item) => (
+                  {items?.map((item) => (
                     <Flex key={item}>
                       <Checkbox
                         checked={isChecked(day, item)}

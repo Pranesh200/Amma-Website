@@ -16,7 +16,6 @@ export default async function handler(req, res) {
       ])
     );
 
-    console.log("HI", filteredCheckedItems);
     // Loop through each day of the week in the checkedItems object
     for (const dayOfWeek in filteredCheckedItems) {
       const items = filteredCheckedItems[dayOfWeek];

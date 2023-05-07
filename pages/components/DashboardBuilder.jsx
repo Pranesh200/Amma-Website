@@ -32,7 +32,6 @@ export default function MenuBuilder() {
   } = useForm();
   const onSubmit = async (data) => {
     const day = data.day_of_week;
-    console.log(day);
     const { data: orders, error } = await supabase
       .from("orders")
       .select("*, menu!inner(*)")
