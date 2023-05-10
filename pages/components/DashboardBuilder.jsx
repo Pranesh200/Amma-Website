@@ -92,8 +92,9 @@ export default function MenuBuilder() {
             </form>
           </div>
         </Box>
-        {orders && <OrderTable orders={orders} />}
       </VStack>
+      {orders && <OrderTable orders={orders} />}
+
       {orders && <ItemTable orders={orders} />}
     </>
   );
