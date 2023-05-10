@@ -97,26 +97,27 @@ function DayItems({ customerName, customerEmail }) {
       );
       const checkedItemsString = JSON.stringify(checkedItems);
 
-      const emailResponse = await axios.post("/api/send-grid", {
-        subject: "Order Confirmation",
-        customerName,
-        customerPhone: customerEmail,
-        checkedItems,
-      });
-      console.log(emailResponse);
+
       const response = await axios.post("/api/checked-items", {
         customerName,
         customerPhone: customerEmail,
         checkedItems,
       });
-
       toast({
         title: "Submitted!",
         status: "success",
         duration: 3000,
         isClosable: true,
       });
-      console.log("submit", response);
+
+      if (response.status == 200) {
+        const emailResponse = await axios.post("/api/send-grid", {
+          subject: "Order Confirmation",
+          customerName,
+          customerPhone: customerEmail,
+          checkedItems,
+        });
+      }
     } catch (error) {
       toast({
         title: "Not Submitted",
