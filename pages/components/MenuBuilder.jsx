@@ -117,7 +117,7 @@ export default function MenuBuilder() {
               color="white"
               default={1}
               min={1}
-              max={10}
+              max={80}
               pattern="^[0-9]*$"
               inputMode="numeric" // Added this line to restrict input to only numbers
               {...register("item_quantity", {
